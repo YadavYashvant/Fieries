@@ -55,6 +55,12 @@
 
         </LinearLayout>
 
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginHorizontal="16dp"
+            />
+
         <Space
             android:layout_width="match_parent"
             android:layout_height="32dp" />
