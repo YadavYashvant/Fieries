@@ -1,5 +1,6 @@
 package com.yashvant.fieries.activities
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
@@ -8,9 +9,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.FirebaseFirestore
 import com.yashvant.fieries.MainActivity
 import com.yashvant.fieries.R
 import com.yashvant.fieries.databinding.ActivityUserBinding
+import com.yashvant.fieries.models.Task
 
 class UserActivity : AppCompatActivity() {
 
@@ -46,4 +50,42 @@ class UserActivity : AppCompatActivity() {
 
         }
     }
+}
+
+
+fun addToFirebase(
+    todo: String,
+    date: String,
+    isDone: Boolean,
+    context: Context
+) {
+    val db: FirebaseFirestore = FirebaseFirestore.getInstance()
+
+    val dbUser: CollectionReference = db.collection("users")
+    val todos = Task(todo, date, isDone)
+
+    if(todo.isNotEmpty() && date.isNotEmpty()){
+        dbUser.add(todos)
+            .addOnSuccessListener { documentReference ->
+                Toast.makeText(
+                    context,
+                    "User added successfully",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(
+                    context,
+                    "Error adding user",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+    }else{
+        Toast.makeText(
+            context,
+            "Please fill all fields",
+            Toast.LENGTH_SHORT
+        ).show()
+    }
+
 }
