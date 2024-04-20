@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "64130373589",
+    "project_id": "fieries-1b223",
+    "storage_bucket": "fieries-1b223.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:64130373589:android:d8bb5eec7e92b7d49f0f5c",
+        "android_client_info": {
+          "package_name": "com.yashvant.fieries"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDGuPMUmZA3M4sCT7fpWN6s6SGJXPNBbcQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
