@@ -120,7 +120,6 @@
                 app:lottie_autoPlay="true"
                 app:lottie_loop="true"/>
 
-
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

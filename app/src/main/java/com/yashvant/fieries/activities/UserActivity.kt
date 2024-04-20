@@ -35,6 +35,8 @@ class UserActivity : AppCompatActivity() {
 
         firebaseAuth = FirebaseAuth.getInstance()
 
+        binding.greetingText.text = "WELCOME BACK"
+
         binding.signOutBtn.setOnClickListener {
             firebaseAuth.signOut()
             val intent = Intent(this, MainActivity::class.java)

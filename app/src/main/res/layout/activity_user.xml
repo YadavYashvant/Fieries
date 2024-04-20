@@ -20,8 +20,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="?attr/textAppearanceHeadline4"
+            android:id="@+id/greeting_text"
             android:text="WELCOME BACK "
             android:textAlignment="center"
+            android:layout_marginTop="16dp"
             />
 
         <Space
