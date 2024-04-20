@@ -49,6 +49,14 @@ class UserActivity : AppCompatActivity() {
             Toast.makeText(this, "Signed Out!!", Toast.LENGTH_SHORT).show()
 
         }
+
+        binding.addtaskbtn.setOnClickListener {
+            val todo = binding.taskEt.text.toString()
+            val todoDate = binding.taskDateEt.text.toString()
+            val isDone = false           // FOR NOW
+            addToFirebase(todo, todoDate, isDone, this)
+            
+        }
     }
 }
 
