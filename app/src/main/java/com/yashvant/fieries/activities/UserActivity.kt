@@ -26,8 +26,6 @@ class UserActivity : AppCompatActivity() {
 
         enableEdgeToEdge()
 
-//        setContentView(R.layout.activity_user)
-
         binding = ActivityUserBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
