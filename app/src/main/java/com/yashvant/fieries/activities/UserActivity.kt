@@ -69,22 +69,22 @@ fun addToFirebase(
 ) {
     val db: FirebaseFirestore = FirebaseFirestore.getInstance()
 
-    val dbUser: CollectionReference = db.collection("users")
+    val dbTasks: CollectionReference = db.collection("tasks")
     val todos = Task(todo, date, isDone)
 
     if(todo.isNotEmpty() && date.isNotEmpty()){
-        dbUser.add(todos)
+        dbTasks.add(todos)
             .addOnSuccessListener { documentReference ->
                 Toast.makeText(
                     context,
-                    "User added successfully",
+                    "Task added successfully",
                     Toast.LENGTH_SHORT
                 ).show()
             }
             .addOnFailureListener { e ->
                 Toast.makeText(
                     context,
-                    "Error adding user",
+                    "Error adding task",
                     Toast.LENGTH_SHORT
                 ).show()
             }
