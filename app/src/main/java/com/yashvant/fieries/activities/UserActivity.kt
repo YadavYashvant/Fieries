@@ -3,6 +3,7 @@ package com.yashvant.fieries.activities
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -11,6 +12,7 @@ import androidx.core.view.WindowInsetsCompat
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.toObject
 import com.yashvant.fieries.MainActivity
 import com.yashvant.fieries.R
 import com.yashvant.fieries.databinding.ActivityUserBinding
@@ -18,6 +20,8 @@ import com.yashvant.fieries.models.Task
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 
 class UserActivity : AppCompatActivity() {
 
@@ -61,7 +65,10 @@ class UserActivity : AppCompatActivity() {
         val taskCollection = taskdb.collection("tasks")
 
         GlobalScope.launch(Dispatchers.IO) {
-
+            val task = taskCollection.document().get().await().toObject(Task::class.java)
+            withContext(Dispatchers.Main){
+                Log.d("Firestore", "Tasks - $task")
+            }
         }
     }
 }
