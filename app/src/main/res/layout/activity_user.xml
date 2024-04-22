@@ -146,12 +146,13 @@
             android:layout_marginTop="16dp"
             android:layout_height="3dp"/>
 
-        <ListView
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:paddingVertical="16dp"
+            android:paddingHorizontal="16dp"
+            tools:listitem="@layout/task_item"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:id="@+id/lv_user"
-            />
+            android:layout_height="wrap_content" />
 
 
 

@@ -4,24 +4,23 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.toObject
 import com.yashvant.fieries.MainActivity
 import com.yashvant.fieries.R
+import com.yashvant.fieries.adapters.TodoAdapter
 import com.yashvant.fieries.databinding.ActivityUserBinding
 import com.yashvant.fieries.models.Task
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 
 var taskList = mutableListOf<Task?>()
@@ -63,7 +62,6 @@ class UserActivity : AppCompatActivity() {
             val isDone = false           // FOR NOW
             addToFirebase(todo, todoDate, isDone, this)
         }
-        val arrayAdapter: ArrayAdapter<*>
 
 
         val taskdb: FirebaseFirestore = FirebaseFirestore.getInstance()
@@ -82,7 +80,9 @@ class UserActivity : AppCompatActivity() {
                 }
 
             withContext(Dispatchers.Main){
-
+                binding.recyclerView.adapter = TodoAdapter(taskList)
+                binding.recyclerView.layoutManager = LinearLayoutManager(this@UserActivity)
+                binding.recyclerView.setHasFixedSize(true)
             }
         }
     }
