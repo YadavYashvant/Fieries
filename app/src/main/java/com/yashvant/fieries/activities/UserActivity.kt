@@ -9,6 +9,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
@@ -21,9 +22,9 @@ import com.yashvant.fieries.models.Task
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 
-var taskList = mutableListOf<Task?>()
 
 class UserActivity : AppCompatActivity() {
 
@@ -67,24 +68,27 @@ class UserActivity : AppCompatActivity() {
         val taskdb: FirebaseFirestore = FirebaseFirestore.getInstance()
         val taskCollection = taskdb.collection("tasks")
 
-        GlobalScope.launch(Dispatchers.IO) {
-            taskCollection.get().addOnSuccessListener { result ->
-                val list = result.documents
-                for (d in list) {
-                    val u = d.toObject(Task::class.java)
-                    taskList.add(u)
-                }
-                Log.d("UserActivity", "Tasks -> $taskList")
-            }.addOnFailureListener {exception ->
-                Log.w("UserActivity", "Error getting documents", exception)
+        lifecycleScope.launch {
+            try {
+                val result = taskCollection.get().await()
+                val taskList = mutableListOf<Task?>()
+
+                for (document in result.documents) {
+                    val task = document.toObject(Task::class.java)
+                    task?.let { taskList.add(it) }
                 }
 
-            withContext(Dispatchers.Main){
+                Log.d("UserActivity", "Tasks -> $taskList")
+
+                // Set RecyclerView adapter after fetching data successfully
                 binding.recyclerView.adapter = TodoAdapter(taskList)
                 binding.recyclerView.layoutManager = LinearLayoutManager(this@UserActivity)
                 binding.recyclerView.setHasFixedSize(true)
+            } catch (e: Exception) {
+                Log.e("UserActivity", "Error getting documents", e)
             }
         }
+
     }
 }
 
