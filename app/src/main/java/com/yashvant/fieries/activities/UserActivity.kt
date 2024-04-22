@@ -77,6 +77,10 @@ class UserActivity : AppCompatActivity() {
             }.addOnFailureListener {exception ->
                 Log.w("UserActivity", "Error getting documents", exception)
                 }
+
+            withContext(Dispatchers.Main){
+
+            }
         }
     }
 }
