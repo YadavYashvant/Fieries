@@ -23,6 +23,8 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 
+var taskList = mutableListOf<Task?>()
+
 class UserActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityUserBinding
@@ -65,10 +67,16 @@ class UserActivity : AppCompatActivity() {
         val taskCollection = taskdb.collection("tasks")
 
         GlobalScope.launch(Dispatchers.IO) {
-            val task = taskCollection.document().get().await().toObject(Task::class.java)
-            withContext(Dispatchers.Main){
-                Log.d("Firestore", "Tasks - $task")
-            }
+            taskCollection.get().addOnSuccessListener { result ->
+                val list = result.documents
+                for (d in list) {
+                    val u = d.toObject(Task::class.java)
+                    taskList.add(u)
+                }
+                Log.d("UserActivity", "Tasks -> $taskList")
+            }.addOnFailureListener {exception ->
+                Log.w("UserActivity", "Error getting documents", exception)
+                }
         }
     }
 }
