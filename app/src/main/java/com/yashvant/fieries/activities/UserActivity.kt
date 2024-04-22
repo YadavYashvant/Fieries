@@ -15,6 +15,9 @@ import com.yashvant.fieries.MainActivity
 import com.yashvant.fieries.R
 import com.yashvant.fieries.databinding.ActivityUserBinding
 import com.yashvant.fieries.models.Task
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class UserActivity : AppCompatActivity() {
 
@@ -45,7 +48,6 @@ class UserActivity : AppCompatActivity() {
             startActivity(intent)
 
             Toast.makeText(this, "Signed Out!!", Toast.LENGTH_SHORT).show()
-
         }
 
         binding.addtaskbtn.setOnClickListener {
@@ -53,7 +55,13 @@ class UserActivity : AppCompatActivity() {
             val todoDate = binding.taskDateEt.text.toString()
             val isDone = false           // FOR NOW
             addToFirebase(todo, todoDate, isDone, this)
-            
+        }
+
+        val taskdb: FirebaseFirestore = FirebaseFirestore.getInstance()
+        val taskCollection = taskdb.collection("tasks")
+
+        GlobalScope.launch(Dispatchers.IO) {
+
         }
     }
 }
