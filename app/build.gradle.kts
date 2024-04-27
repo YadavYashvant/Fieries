@@ -41,7 +41,6 @@ android {
 }
 
 dependencies {
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
@@ -56,5 +55,7 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
     val lottieVersion = "6.4.0"
     implementation ("com.airbnb.android:lottie:$lottieVersion")
+
+    implementation("com.github.skydoves:transformationlayout:1.1.3")
 
 }
